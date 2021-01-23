@@ -1,9 +1,11 @@
+
 from tkinter import *
 from tkinter import messagebox
 import pickle
 from random import randint
 
-
+chars = ('qwertyuiopasdfghjklzxcvbnm1234567890')
+n = 10
 
 root = Tk()
 root.geometry("300x500")
@@ -20,6 +22,7 @@ def registation():
     text_password2 = Label(text="Повторите пароль:")
     registation_password2 = Entry(show = "*")
     button_registration = Button(text = "Зарегистироваться", command = lambda: save())
+    button_generarion = Button(text = 'Сгенерировать пароль', command = lambda : create())
     text.pack()
     text_login.pack()
     registation_login.pack()
@@ -28,6 +31,7 @@ def registation():
     text_password2.pack()
     registation_password2.pack()
     button_registration.pack()
+    button_generarion.pack()
 
     def save():
         login_password_save = {}
@@ -53,19 +57,24 @@ def login():
     enter_password.pack()
     button_enter.pack()
 
+
     def login_pass():
         doc = open("login.txt", "rb")
         a = pickle.load(doc)
         doc.close()
         if enter_login.get() in a:
             if enter_password.get() == a[enter_login.get()]:
-                messagebox.showinfo("Вход выполнен", "Привет! У тебя 5 новых сообщений")
+                messagebox.showinfo("Вход выполнен")
             else:
                 messagebox.showerror("Ошибка", "Неверный пароль")
         else:
             messagebox.showerror("Ошибка", "Неверный логин")
 
-
+def create():
+    password = ' '
+    for i in range(n):
+        password = f'{password}{chars[randint(0, len(chars)-1)]}'
+    print(password)
 
 registation()
 
